@@ -18,7 +18,7 @@ gdt_entry_t gdt_entries[GDT_LENGTH];	//全局描述符表定义
 
 gdt_ptr_t gdt_ptr;		//GDTR
 
-static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint gran);
+static void gdt_set_gate(int32_t num, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
 
 extern uint32_t stack;	//声明内核栈地址
 
@@ -28,10 +28,10 @@ void init_gdt()
 	gdt_ptr.base = (uint32_t)&gdt_entries;
 
 	gdt_set_gate(0, 0, 0, 0, 0);//intel要求第一个描述符全为0
-	gdt_set_gate(1, 0, 0xFFFFFFFFF, 0x9a, 0xcf);	//z指令段
-	gdt_set_gate(2, 0, 0xFFFFFFFFF, 0x92, 0xcf);	//数据段
-	gdt_set_gate(3, 0, 0xFFFFFFFFF, 0xfa, 0xcf);	//用户模式代码段
-	gdt_set_gate(4, 0, 0xFFFFFFFFF, 0xf2, 0xcf);	//用户模式数据段
+	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9a, 0xcf);	//z指令段
+	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xcf);	//数据段
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xfa, 0xcf);	//用户模式代码段
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xf2, 0xcf);	//用户模式数据段
 
 	gdt_flush((uint32_t)&gdt_ptr);	//加载全局描述符表地址到GPTR寄存器
 }
