@@ -98,7 +98,7 @@ typedef struct multiboot_t
 	uint32_t vbe_interface_seg;
 	uint32_t vbe_interface_off;
 	uint32_t vbe_interface_len;
-}__attribute__((packed))multiboot;
+}__attribute__((packed))multiboot_t;
 
 /**
  * size是相关结构的大小，单位是字节，它可能大于最小值20

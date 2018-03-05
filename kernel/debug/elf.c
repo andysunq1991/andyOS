@@ -15,7 +15,7 @@
 #include "elf.h"
 
 //从mutiboot_t结构体中获取elf信息
-elf_t elf_from_multiboot(mutiboot_t *mb)
+elf_t elf_from_multiboot(multiboot_t *mb)
 {
 	elf_t elf;
 	int i = 0;

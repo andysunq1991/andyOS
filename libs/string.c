@@ -25,7 +25,7 @@ inline void memset(void *dest, uint8_t val, uint32_t len)
 
 	for(; len!=0; len--)
 	{
-		*dest++ = val;
+		*dst++ = val;
 	}
 }
 

@@ -17,7 +17,7 @@ int kern_entry()
 {
 	init_debug();
 	console_clear();
-	print_color(rc_black, rc_green, "Hello, OS kernel!\n", );
+	printk_color(rc_black, rc_green, "Hello, OS kernel!\n");
 	panic("TEST");
 	return 0;
 }

@@ -60,7 +60,7 @@ void print_stack_trace()
 	asm volatile ("mov %%ebp, %0" : "=r" (ebp));
 	while(ebp)
 	{
-		eip = eip+1;
+		eip = ebp+1;
 		printk("	[0x%x] %s\n",*eip, elf_lookup_symbol(*eip, &kernel_elf));
 		ebp = (uint32_t*)*ebp;
 	}
