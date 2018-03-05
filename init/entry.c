@@ -10,13 +10,15 @@
  * =====================================================================================
  */
 
-#include "types.h"
 #include "console.h"
+#include "debug.h"
 
 int kern_entry()
 {
+	init_debug();
 	console_clear();
-	console_write_color("Hello, OS kernel!\nhello\n", rc_black, rc_white);
+	print_color(rc_black, rc_green, "Hello, OS kernel!\n", );
+	panic("TEST");
 	return 0;
 }
 
