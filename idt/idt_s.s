@@ -40,7 +40,7 @@ irq%1:
 	push byte 0
 	push byte %2
 	jmp irq_common_stub
-%enddmacro
+%endmacro
 
 ; 定义中断处理函数
 ISR_NOERRCODE  0 	; 0 #DE 除 0 异常
