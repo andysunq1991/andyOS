@@ -18,7 +18,7 @@ void init_idt();	//初始化中断描述符表
 
 typedef struct idt_entry_t
 {
-	uint16_t base_io;	//中断处理函数地址15~0
+	uint16_t base_lo;	//中断处理函数地址15~0
 	uint16_t sel;		//目标代码段描述符选择子
 	uint8_t	 always0;	//置0段
 	uint8_t  flags;		//一些标志，文档有解释

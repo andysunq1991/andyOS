@@ -16,7 +16,7 @@
 
 idt_entry_t idt_entries[256];	//中断描述符表
 
-idt_ptr_t idt_prt;				//IDTR
+idt_ptr_t idt_ptr;				//IDTR
 
 interrupt_handler_t interrupt_handlers[256];	//中断处理函数的指针数组
 

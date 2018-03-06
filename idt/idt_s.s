@@ -21,16 +21,16 @@ isr%1:
 	push 0		;push无效的中断错误码(起到占位作用，便于所有isr函数统一清栈)
 	push %1		;push中断号
 	jmp isr_common_stub
-%enddmacro
+%endmacro
 
 ;用于有错误码的中断
-%macro ISR_ERRCODE 0
+%macro ISR_ERRCODE 1
 [GLOBAL isr%1]
 isr%1:
 	cli			;关中断
 	push %1		;push中断号
 	jmp	isr_common_stub
-%enddmacro
+%endmacro
 
 ; 定义中断处理函数
 ISR_NOERRCODE  0 	; 0 #DE 除 0 异常
