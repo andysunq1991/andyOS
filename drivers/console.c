@@ -12,7 +12,7 @@
 #include "common.h"
 #include "console.h"
 
-static uint16_t *video_memory = (uint16_t *)0xB8000;		//VGA的显示缓冲起点是0xB8000
+static uint16_t *video_memory = (uint16_t *)(0xB8000+0xc0000000);		//VGA的显示缓冲起点是0xB8000
 static uint8_t cursor_x = 0;		//屏幕光标的坐标
 static uint8_t cursor_y = 0;
 

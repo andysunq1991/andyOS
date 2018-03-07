@@ -24,33 +24,53 @@
  *      For simplicity we simply bundle this in with the .data section.
  */
 
-ENTRY(start)
+ENTRY(start)    /*将符号start的值设置成入口地址,入口地址(entry point): 进程执行的第一条用户空间的指令在进程地址空间的地址)*/
 SECTIONS
 {
-    . = 0x100000;
-    PROVIDE(kern_start = .);
-    .text :
+    PROVIDE( kern_start = 0xc0100000);  /*该关键字用于定义这类符号：在目标文件内被引用，但没有在任何目标文件内被定义的符号*/
+
+    . = 0x100000;  /*把定位器符号置为0×100000 (若不指定, 则该符号的初始值为0).*/
+
+    .init.text :
+    {
+        *(.init.text)
+        . = ALIGN(4096);
+    }
+    /*将所有(*符号代表任意输入文件)输入文件的.text section合并成一个.text section, 该section的地址由定位器符号的值指定, 即0×10000.*/
+
+    .init.data :
+    {
+        *(.init.data)
+        . = ALIGN(4096);
+    }
+
+    . += 0xc0000000;
+
+    .text : AT(ADDR(.text) - 0xc0000000)
     {
         *(.text)
         . = ALIGN(4096);
     }
-    .data :
+    /*输出section的LMA ：默认情况下，LMA等于VMA，但可以通过关键字AT()指定LMA。
+    用关键字AT()指定，括号内包含表达式，表达式的值用于设置LMA。如果不用AT()关键字，那么可用AT>LMA_REGION表达式设置指定该section加载地址的范围。这个属性主要用于构件ROM境象。*/
+
+    .data : AT(ADDR(.data) - 0xc0000000)
     {
         *(.data)
-        *(.rodata)
         . = ALIGN(4096);
     }
-    .bss :
+
+    .bss : AT(ADDR(.bss) - 0xc0000000)
     {
         *(.bss)
         . = ALIGN(4096);
     }
-    .stab :
+    .stab : AT(ADDR(.stab) - 0xc0000000)
     {
         *(.stab)
         . = ALIGN(4096);
     }
-    .stabstr :
+    .stabstr : AT(ADDR(.stabstr) - 0xc0000000)
     {
         *(.stabstr)
         . = ALIGN(4096);
