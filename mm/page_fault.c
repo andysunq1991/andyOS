@@ -12,7 +12,7 @@
 #include "vmm.h"
 #include "debug.h"
 
-void page_fault(pt_regs *reg)
+void page_fault(pt_regs *regs)
 {
 	uint32_t cr2 = 0;
 	asm volatile ("mov %%cr2, %0" : "=r" (cr2));

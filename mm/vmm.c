@@ -19,7 +19,7 @@
 pgd_t pgd_kern[PGD_SIZE] __attribute__((aligned(PAGE_SIZE)));
 
 //内核页表区域
-static pte_t pte_kern[PTE_COUNT][PTE_SIZE] __attribute__((aligned)(PAGE_SIZE)));
+static pte_t pte_kern[PTE_COUNT][PTE_SIZE] __attribute__((aligned(PAGE_SIZE)));
 
 void init_vmm()
 {
@@ -31,7 +31,7 @@ void init_vmm()
 
 	for(i=kern_pte_first_idx,j=0; i<kern_pte_first_idx+PTE_COUNT; i++,j++)//初始化页目录
 	{
-		pgd_kern[i] = (uint32_t *)pte_kern[i] - PAGE_OFFSET | PAGE_PRESENT | PAGE_WRITE;
+		pgd_kern[i] = (uint32_t)(pte_kern[i] - PAGE_OFFSET) | PAGE_PRESENT | PAGE_WRITE;
 	}
 
 	uint32_t *pte = (uint32_t *)pte_kern;

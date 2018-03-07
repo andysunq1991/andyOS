@@ -16,13 +16,13 @@
 #include "timer.h"
 #include "pmm.h"
 #include "string.h"
-#include "vmm.h.h"
+#include "vmm.h"
 
 //内核初始化函数
 void kern_init();
 
 //开启分页机制后的Multiboot数据指针
-multiboot *glb_mboot_ptr = NULL;
+multiboot_t *glb_mboot_ptr = NULL;
 
 //开启分页机制后的内核栈
 char kern_stack[STACK_SIZE];
@@ -33,26 +33,26 @@ __attribute__((section(".init.data"))) pgd_t *pte_low = (pgd_t *)0x2000;
 __attribute__((section(".init.data"))) pgd_t *pte_hign = (pgd_t *)0x3000;
 
 //内核入口函数 
-__attribute__((sectiom(".init.text"))) void kern_entry()
+__attribute__((section(".init.text"))) void kern_entry()
 {
-	pgd_tmp[0] = (uint32_t)pte_low | PAGE_PRESERNT | PAGE_WRITE;
-	pgd_tmp[PGD_INDEX(PAGE_OFFSET)] = (uint32_t)pte_hign | PAGE_PRESERNT | PAGE_WRITE;
+	pgd_tmp[0] = (uint32_t)pte_low | PAGE_PRESENT | PAGE_WRITE;
+	pgd_tmp[PGD_INDEX(PAGE_OFFSET)] = (uint32_t)pte_hign | PAGE_PRESENT | PAGE_WRITE;
 
 	//映射内核虚拟地址4MB到物理地址前4MB
 	int i = 0 ;
 	for(i=0; i<1024; i++)
 	{
-		pte_low[i] = (i<<12) | PAGE_PRESERNT | PAGE_WRITE;
+		pte_low[i] = (i<<12) | PAGE_PRESENT | PAGE_WRITE;
 	}
 
 	//映射0x00000000-0x00400000的物理地址到虚拟地址0xc0000000-0xc0400000
 	for (i=0; i<1024; i++)
 	{
-		pte_hign[i] = (i<<12) | PAGE_PRESERNT | PAGE_WRITE;
+		pte_hign[i] = (i<<12) | PAGE_PRESENT | PAGE_WRITE;
 	}
 
 	//设置临时页表
-	asm volatile ("mov %0, %%cr3" : : "r" (pgd_tmp))//cr3页对齐，即高20位有效
+	asm volatile ("mov %0, %%cr3" : : "r" (pgd_tmp));//cr3页对齐，即高20位有效
 
 	uint32_t cr0;
 	//启用分页机制

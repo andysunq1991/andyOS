@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *       Filename:  pmm.h
- *    Description:  内存管理
+ *    Description:  物理内存管理
  *        Version:  1.0
  *        Created:  2018年03月06日
  *       Revision:  none
@@ -24,6 +24,7 @@
 
 #define PHY_PAGE_MASK 0xFFFFF000	//页掩码按照4096字节对齐
 
+extern uint32_t phy_page_count;
 //内核文件在内存中的起始和结束位置，在链接器脚本中要求链接器定义
 extern uint8_t kern_start[];
 extern uint8_t kern_end[];
