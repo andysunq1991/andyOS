@@ -10,9 +10,9 @@
  * =====================================================================================
  */
 #ifndef INCLUDE_HEAP_H_
-#ifndef INCLUDE_HEAP_H_
+#define INCLUDE_HEAP_H_
 
-#include "types.f"
+#include "types.h"
 
 //堆起始地址
 #define HEAP_START 0xe0000000

@@ -30,7 +30,7 @@ static void split(header_t *chunk, uint32_t len);
 //合并内存块
 static void glue(header_t *chunk);
 
-viod init_heap()
+void init_heap()
 {
 	heap_first = 0;
 }
@@ -65,7 +65,7 @@ void *kmalloc(uint32_t len)
 	}
 	else
 	{
-		chunk_start = HEAP_START
+		chunk_start = HEAP_START;
 		heap_first = chunk_start;
 	}
 
@@ -99,7 +99,7 @@ void alloc_chunk(uint32_t start, uint32_t len)
 	{
 		uint32_t page = pmm_alloc_page();
 		map(pgd_kern, heap_max, page, PAGE_PRESENT | PAGE_WRITE);
-		heap_max += PGAE_SIZE;
+		heap_max += PAGE_SIZE;
 	}
 }
 
@@ -115,12 +115,12 @@ void free_chunk(header_t *chunk)
 	}
 
 	//空闲超过1页就释放
-	while((heap_max-PGAE_SIZE) >= (uint32_t)chunk)
+	while((heap_max-PAGE_SIZE) >= (uint32_t)chunk)
 	{
-		heap_max -= PGAE_SIZE;
+		heap_max -= PAGE_SIZE;
 		uint32_t page = 0;
 		get_mapping(pgd_kern, heap_max, &page);
-		umap(pgd_kern, heap_max);
+		unmap(pgd_kern, heap_max);
 		pmm_free_page(page);
 	}
 }

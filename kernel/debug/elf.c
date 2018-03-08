@@ -13,6 +13,7 @@
 #include "common.h"
 #include "string.h"
 #include "elf.h"
+#include "vmm.h"
 
 //从mutiboot_t结构体中获取elf信息
 elf_t elf_from_multiboot(multiboot_t *mb)

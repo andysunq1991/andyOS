@@ -43,9 +43,9 @@ void init_vmm()
 
 	uint32_t pgd_kern_phy_addr = (uint32_t)pgd_kern - PAGE_OFFSET;
 
-	register_interrupt_handler(14, &page_fault);
+	register_interrupt_handler(14, page_fault);
 
-	swith_pgd(pgd_kern_phy_addr);
+	//swith_pgd(pgd_kern_phy_addr);
 }
 
 void swith_pgd(uint32_t pd)
